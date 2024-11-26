@@ -16,7 +16,7 @@ const LoginForm: React.FC = () => {
             await login({ username, password }, setToken);
             alert('Login successful!');
             // Navigate to user dashboard after successful login
-            //navigate('/dashboard');
+            navigate('/dashboard');
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             alert('Login failed, please try again.');
