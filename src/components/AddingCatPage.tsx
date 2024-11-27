@@ -1,6 +1,19 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../services/apiClient';
+
+interface Cat {
+    id: string;
+    name: string;
+    imageUrl: string;
+    breed: string;
+    gender: string;
+    description: string;
+    momId: string;
+    dadId: string;
+    momName: string;
+    dadName: string;
+}
 
 const AddingCatPage: React.FC = () => {
     const navigate = useNavigate();
@@ -9,7 +22,25 @@ const AddingCatPage: React.FC = () => {
     const [breed, setBreed] = useState<string>('');
     const [gender, setGender] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+    const [cats, setCats] = useState<Cat[]>([]);
+    const [momId, setMomId] = useState('');
+    const [dadId, setDadId] = useState('');
+    const [momName, setMomName] = useState('');
+    const [dadName, setDadName] = useState('');
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchCats = async () => {
+            try {
+                const response = await apiClient.get('/users/me/cats');
+                setCats(response.data);
+            } catch (err) {
+                console.error('Failed to fetch cats', err);
+                setError('Failed to load cat data. Please try again later.');
+            }
+        };
+        fetchCats();
+    }, []);
 
     const handleAddCat = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -17,7 +48,7 @@ const AddingCatPage: React.FC = () => {
         try {
             const response = await apiClient.post(
                 '/users/me/cats',
-                { name, photoUrl, breed, gender, description },
+                { name, photoUrl, breed, gender, description, momId, dadId, momName, dadName},
             );
 
             if (response.status === 201) {
@@ -106,6 +137,30 @@ const AddingCatPage: React.FC = () => {
                             rows={3}
                             required
                         ></textarea>
+                    </div>
+                    <div>
+                        <label>Mom:</label>
+                        <select value={momId} onChange={(e) => {
+                            setMomId(e.target.value);
+                            setMomName(cats.find(cat => cat.id === e.target.value)?.name || '');
+                        }}>
+                            <option value="">Select Mom</option>
+                            {cats.map((cat) => (
+                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <label>Dad:</label>
+                        <select value={dadId} onChange={(e) => {
+                            setDadId(e.target.value);
+                            setDadName(cats.find(cat => cat.id === e.target.value)?.name || '');
+                        }}>
+                            <option value="">Select Dad</option>
+                            {cats.map((cat) => (
+                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            ))}
+                        </select>
                     </div>
                     <button type="submit" className="btn btn-primary w-100">
                         Add Cat

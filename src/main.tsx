@@ -7,6 +7,7 @@ import RegistrationForm from './components/RegistrationForm';
 import './index.css';
 import CatDashboardPage from "./components/CatDashboardPage.tsx";
 import AddingCatPage from "./components/AddingCatPage.tsx";
+import CatDetailPage from "./components/CatDetailPage.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -17,6 +18,7 @@ root.render(
                 <Route path="/register" element={<RegistrationForm />} />
                 <Route path="/dashboard" element={<CatDashboardPage />} />
                 <Route path="/add-cat" element={<AddingCatPage />} />
+                <Route path="/cats/:id" element={<CatDetailPage />} />
                 <Route path="/" element={<LoginForm />} />
             </Routes>
         </Router>

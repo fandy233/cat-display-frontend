@@ -11,6 +11,10 @@ interface Cat {
     breed: string;
     gender: string;
     description: string;
+    momId: string;
+    dadId: string;
+    momName: string;
+    dadName: string;
 }
 
 const CatDashboardPage: React.FC = () => {
@@ -80,7 +84,7 @@ const CatDashboardPage: React.FC = () => {
                                 className="card-img-top"
                                 alt={cat.name}
                             />
-                            <div className="card-body">
+                            <div className="card-body" key={cat.id} onClick={() => navigate(`/cats/${cat.id}`)}>
                                 <h5 className="card-title">{cat.name}</h5>
                                 <p className="card-text">
                                     <strong>Breed:</strong> {cat.breed}
