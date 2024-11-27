@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
-import { tokenAtom } from '../atoms/authAtoms';
 import apiClient from '../services/apiClient';
 
 const AddingCatPage: React.FC = () => {
-    const token = useAtomValue(tokenAtom);
     const navigate = useNavigate();
     const [name, setName] = useState<string>('');
     const [photoUrl, setPhotoUrl] = useState<string>('');
@@ -21,11 +18,6 @@ const AddingCatPage: React.FC = () => {
             const response = await apiClient.post(
                 '/users/me/cats',
                 { name, photoUrl, breed, gender, description },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
             );
 
             if (response.status === 201) {

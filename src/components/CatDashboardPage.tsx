@@ -28,6 +28,7 @@ const CatDashboardPage: React.FC = () => {
                 try {
                     setLoading(true);
                     const response = await apiClient.get('/users/me/cats');
+                    console.log(response.data);
                     setCats(response.data);
                 } catch (error) {
                     console.error('Failed to fetch cats', error);

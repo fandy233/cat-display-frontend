@@ -9,6 +9,7 @@ export const login = async (credentials: Credentials, setToken: (token: string |
     try {
         const response = await apiClient.post('/auth/login', credentials);
         setToken(response.data.token); // Set the token in the atom
+        console.log("set token", response.data.token);
     } catch (error) {
         console.error('Login failed', error);
         throw error;
