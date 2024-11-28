@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import apiClient from '../services/apiClient';
 
 interface Cat {
     id: string;
     name: string;
-    imageUrl: string;
+    photoUrl: string;
     breed: string;
     gender: string;
     description: string;
@@ -15,7 +15,7 @@ interface Cat {
     dadName: string;
 }
 
-const AddingCatPage: React.FC = () => {
+const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
     const navigate = useNavigate();
     const [name, setName] = useState<string>('');
     const [photoUrl, setPhotoUrl] = useState<string>('');
@@ -28,6 +28,7 @@ const AddingCatPage: React.FC = () => {
     const [momName, setMomName] = useState('');
     const [dadName, setDadName] = useState('');
     const [error, setError] = useState<string | null>(null);
+    const { id } = useParams();
 
     useEffect(() => {
         const fetchCats = async () => {
@@ -42,18 +43,50 @@ const AddingCatPage: React.FC = () => {
         fetchCats();
     }, []);
 
+    useEffect(() => {
+        if (isEdit && id) {
+            const fetchCatDetails = async () => {
+                try {
+                    const response = await apiClient.get(`/cats/${id}`);
+                    const cat = response.data;
+                    setName(cat.name);
+                    setBreed(cat.breed);
+                    setGender(cat.gender);
+                    setDescription(cat.description);
+                    setPhotoUrl(cat.photoUrl);
+                    setMomId(cat.momId || '');
+                    setDadId(cat.dadId || '');
+                    setMomName(cat.momName || '');
+                    setDadName(cat.dadName || '');
+                } catch (err) {
+                    console.error('Failed to fetch cat details', err);
+                }
+            };
+            fetchCatDetails();
+        }
+    }, [isEdit, id]);
+
     const handleAddCat = async (event: React.FormEvent) => {
         event.preventDefault();
-
         try {
-            const response = await apiClient.post(
-                '/users/me/cats',
-                { name, photoUrl, breed, gender, description, momId, dadId, momName, dadName},
-            );
-
-            if (response.status === 201) {
-                navigate('/dashboard');
+            const newCat = {
+                name,
+                breed,
+                gender,
+                description,
+                photoUrl,
+                ...(momId && { momId, momName: cats.find(cat => cat.id === momId)?.name || '' }),
+                ...(dadId && { dadId, dadName: cats.find(cat => cat.id === dadId)?.name || '' }),
+                momName,
+                dadName
+            };
+            if (isEdit) {
+                await apiClient.put(`/users/me/cats/${id}`, newCat);
+            } else {
+                await apiClient.post('/users/me/cats', newCat);
             }
+            navigate('/dashboard');
+
         } catch (error) {
             console.error('Failed to add cat', error);
             setError('Failed to add cat. Please try again later.');
@@ -62,8 +95,8 @@ const AddingCatPage: React.FC = () => {
 
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
-            <div className="card p-4 shadow-sm" style={{ maxWidth: '500px', width: '100%' }}>
-                <h3 className="text-center mb-4">Add New Cat</h3>
+            <div className="card p-4 shadow-sm" style={{maxWidth: '500px', width: '100%'}}>
+                <h2>{isEdit ? 'Edit Cat' : 'Add New Cat'}</h2>
                 {error && (
                     <div className="alert alert-danger" role="alert">
                         {error}
@@ -93,7 +126,6 @@ const AddingCatPage: React.FC = () => {
                             id="photoUrl"
                             value={photoUrl}
                             onChange={(e) => setPhotoUrl(e.target.value)}
-                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -135,7 +167,6 @@ const AddingCatPage: React.FC = () => {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             rows={3}
-                            required
                         ></textarea>
                     </div>
                     <div>
@@ -162,13 +193,11 @@ const AddingCatPage: React.FC = () => {
                             ))}
                         </select>
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">
-                        Add Cat
-                    </button>
+                    <button type="submit">{isEdit ? 'Update Cat' : 'Add Cat'}</button>
                 </form>
             </div>
         </div>
     );
 };
 
-export default AddingCatPage;
+export default CatFormPage;

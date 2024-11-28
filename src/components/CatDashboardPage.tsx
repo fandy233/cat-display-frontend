@@ -84,7 +84,7 @@ const CatDashboardPage: React.FC = () => {
                                 className="card-img-top"
                                 alt={cat.name}
                             />
-                            <div className="card-body" key={cat.id} onClick={() => navigate(`/cats/${cat.id}`)}>
+                            <div className="card-body" key={cat.id}>
                                 <h5 className="card-title">{cat.name}</h5>
                                 <p className="card-text">
                                     <strong>Breed:</strong> {cat.breed}
@@ -95,6 +95,38 @@ const CatDashboardPage: React.FC = () => {
                                 <p className="card-text">
                                     <strong>Description:</strong> {cat.description}
                                 </p>
+                                <button
+                                    onClick={() => navigate(`/cats/${cat.id}`)}
+                                    style={{
+                                        position: 'absolute',
+                                        bottom: '10px',
+                                        left: '10px',
+                                        padding: '5px 10px',
+                                        backgroundColor: '#17a2b8',
+                                        color: '#fff',
+                                        border: 'none',
+                                        borderRadius: '5px',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    Show Details
+                                </button>
+                                <button
+                                    onClick={() => navigate(`/edit-cat/${cat.id}`)}
+                                    style={{
+                                        position: 'absolute',
+                                        bottom: '10px',
+                                        right: '10px',
+                                        padding: '5px 10px',
+                                        backgroundColor: '#007bff',
+                                        color: '#fff',
+                                        border: 'none',
+                                        borderRadius: '5px',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    Edit
+                                </button>
                             </div>
                         </div>
                     </div>
