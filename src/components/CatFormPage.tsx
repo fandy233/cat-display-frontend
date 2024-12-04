@@ -5,7 +5,7 @@ import apiClient from '../services/apiClient';
 interface Cat {
     id: string;
     name: string;
-    photoUrl: string;
+    imageUrl: string;
     breed: string;
     gender: string;
     description: string;
@@ -18,7 +18,7 @@ interface Cat {
 const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
     const navigate = useNavigate();
     const [name, setName] = useState<string>('');
-    const [photoUrl, setPhotoUrl] = useState<string>('');
+    const [imageUrl, setImageUrl] = useState<string>('');
     const [breed, setBreed] = useState<string>('');
     const [gender, setGender] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -28,7 +28,9 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
     const [momName, setMomName] = useState('');
     const [dadName, setDadName] = useState('');
     const [error, setError] = useState<string | null>(null);
+    const [isUploading, setIsUploading] = useState(false);
     const { id } = useParams();
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // limit 5 MB in bytes
 
     useEffect(() => {
         const fetchCats = async () => {
@@ -53,7 +55,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                     setBreed(cat.breed);
                     setGender(cat.gender);
                     setDescription(cat.description);
-                    setPhotoUrl(cat.photoUrl);
+                    setImageUrl(cat.photoUrl);
                     setMomId(cat.momId || '');
                     setDadId(cat.dadId || '');
                     setMomName(cat.momName || '');
@@ -66,6 +68,45 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
         }
     }, [isEdit, id]);
 
+    useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (isUploading) {
+                e.preventDefault();
+                e.returnValue = 'An image upload is still in progress.';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [isUploading]);
+
+    const handleImageUpload = async (file: File) => {
+
+        if (file.size > MAX_FILE_SIZE) {
+            alert('File size exceeds 5 MB. Please upload a smaller image.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('smfile', file);
+        setIsUploading(true);
+
+        try {
+            const response = await apiClient.post('/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Override Content-Type
+                },
+            });
+            const uploadedUrl = response.data.url;
+            setImageUrl(uploadedUrl); // Save the uploaded URL to the state
+            console.log('Image uploaded successfully:', response.data);
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        } finally {
+            setIsUploading(false); // End upload
+        }
+    };
+
     const handleAddCat = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
@@ -74,7 +115,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                 breed,
                 gender,
                 description,
-                photoUrl,
+                imageUrl: imageUrl || '',
                 ...(momId && { momId, momName: cats.find(cat => cat.id === momId)?.name || '' }),
                 ...(dadId && { dadId, dadName: cats.find(cat => cat.id === dadId)?.name || '' }),
                 momName,
@@ -114,18 +155,6 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="photoUrl" className="form-label">
-                            Photo URL
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="photoUrl"
-                            value={photoUrl}
-                            onChange={(e) => setPhotoUrl(e.target.value)}
                         />
                     </div>
                     <div className="mb-3">
@@ -193,7 +222,18 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                             ))}
                         </select>
                     </div>
-                    <button type="submit">{isEdit ? 'Update Cat' : 'Add Cat'}</button>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                            if (e.target.files?.[0]) {
+                                handleImageUpload(e.target.files[0]);
+                            }
+                        }}
+                        disabled={isUploading} // Disable the input while uploading
+                    />
+                    {isUploading && <p>Uploading image, please wait...</p>}
+                    <button disabled={isUploading} type="submit">{isEdit ? 'Update Cat' : 'Add Cat'}</button>
                 </form>
             </div>
         </div>
