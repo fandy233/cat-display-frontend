@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import apiClient from '../services/apiClient';
+import apiClient, {ensureInterceptorReady} from '../services/apiClient';
 
 interface Cat {
     id: string;
@@ -35,6 +35,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
     useEffect(() => {
         const fetchCats = async () => {
             try {
+                await ensureInterceptorReady(); // Wait for the interceptor to be initialized
                 const response = await apiClient.get('/users/me/cats');
                 setCats(response.data);
             } catch (err) {
@@ -55,7 +56,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                     setBreed(cat.breed);
                     setGender(cat.gender);
                     setDescription(cat.description);
-                    setImageUrl(cat.photoUrl);
+                    setImageUrl(cat.imageUrl);
                     setMomId(cat.momId || '');
                     setDadId(cat.dadId || '');
                     setMomName(cat.momName || '');
@@ -94,11 +95,11 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
         try {
             const response = await apiClient.post('/upload', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data', // Override Content-Type
+                    'Content-Type': 'multipart/form-data',
                 },
             });
             const uploadedUrl = response.data.url;
-            setImageUrl(uploadedUrl); // Save the uploaded URL to the state
+            setImageUrl(uploadedUrl);
             console.log('Image uploaded successfully:', response.data);
         } catch (error) {
             console.error('Error uploading image:', error);
@@ -122,8 +123,10 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                 dadName
             };
             if (isEdit) {
+                await ensureInterceptorReady(); // Wait for the interceptor to be initialized
                 await apiClient.put(`/users/me/cats/${id}`, newCat);
             } else {
+                await ensureInterceptorReady(); // Wait for the interceptor to be initialized
                 await apiClient.post('/users/me/cats', newCat);
             }
             navigate('/dashboard');

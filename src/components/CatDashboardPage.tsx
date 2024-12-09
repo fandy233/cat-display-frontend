@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
-import { tokenAtom } from '../atoms/authAtoms';
-import apiClient from '../services/apiClient';
+import apiClient, {ensureInterceptorReady} from '../services/apiClient';
 
 interface Cat {
     id: string;
@@ -18,19 +16,16 @@ interface Cat {
 }
 
 const CatDashboardPage: React.FC = () => {
-    const token = useAtomValue(tokenAtom);
     const navigate = useNavigate();
     const [cats, setCats] = useState<Cat[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!token) {
-            navigate('/login');
-        } else {
             const fetchCats = async () => {
                 try {
                     setLoading(true);
+                    await ensureInterceptorReady(); // Wait for the interceptor to be initialized
                     const response = await apiClient.get('/users/me/cats');
                     console.log(response.data);
                     setCats(response.data);
@@ -43,8 +38,8 @@ const CatDashboardPage: React.FC = () => {
             };
 
             fetchCats();
-        }
-    }, [token, navigate]);
+
+    }, [navigate]);
 
     if (loading) {
         return (

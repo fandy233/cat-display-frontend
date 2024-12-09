@@ -1,58 +1,82 @@
-import React, { useState } from 'react';
 import { useSetAtom } from 'jotai';
-import { tokenAtom } from '../atoms/authAtoms';
 import { login } from '../services/authService';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { authAtom } from "../state/authAtoms.ts";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const LoginForm: React.FC = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const setToken = useSetAtom(tokenAtom);
+    const setAuth = useSetAtom(authAtom);
     const navigate = useNavigate();
 
-    const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault();
-        try {
-            await login({ username, password }, setToken);
-            alert('Login successful!');
-            // Navigate to user dashboard after successful login
-            navigate('/dashboard');
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (error) {
-            alert('Login failed, please try again.');
+    const handleLogin = useFormik({
+        initialValues: {
+            username: '',
+            password: '',
+        },
+        validationSchema: Yup.object({
+            username: Yup.string()
+                .min(3, 'Username must be at least 3 characters')
+                .max(20, 'Username must not exceed 20 characters')
+                .required('Username is required'),
+            password: Yup.string()
+                .min(8, 'Password must be at least 8 characters')
+                .required('Password is required'),
+        }),
+        onSubmit: async (values, { setSubmitting, setFieldError }) => {
+                try {
+                    await login(values, setAuth);
+                    alert('Login successful!');
+                    // Navigate to user dashboard after successful login
+                    navigate('/dashboard');
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                } catch (error) {
+                    setFieldError('username', `Invalid username or password`);
+                    alert('Login failed, please try again.');
+                }  finally {
+                    setSubmitting(false);
+                }
         }
-    };
+    });
 
     return (
         <div className="login-container d-flex justify-content-center align-items-center vh-100">
             <div className="card p-4 shadow-sm" style={{maxWidth: '400px', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)',}}>
                 <h3 className="text-center mb-4">Login</h3>
-                <form onSubmit={handleLogin}>
+                <form onSubmit={handleLogin.handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="username" className="form-label">Username</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${
+                                handleLogin.touched.username && handleLogin.errors.username ? 'is-invalid' : ''
+                            }`}
                             id="username"
                             placeholder="Enter your username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
+                            {...handleLogin.getFieldProps('username')}
                         />
+                        {handleLogin.touched.username && handleLogin.errors.username ? (
+                            <div className="invalid-feedback">{handleLogin.errors.username}</div>
+                        ) : null}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
                         <input
                             type="password"
-                            className="form-control"
+                            className={`form-control ${
+                                handleLogin.touched.password && handleLogin.errors.password ? 'is-invalid' : ''
+                            }`}
                             id="password"
                             placeholder="Enter your password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
+                            {...handleLogin.getFieldProps('password')}
                         />
+                        {handleLogin.touched.password && handleLogin.errors.password ? (
+                            <div className="invalid-feedback">{handleLogin.errors.password}</div>
+                        ) : null}
                     </div>
-                    <button type="submit" className="btn w-100 mb-3" style={{ backgroundColor: '#8B5E3C', color: '#FFF9F3', border: 'none' }}>
+                    <button type="submit" className="btn w-100 mb-3"
+                            style={{ backgroundColor: '#8B5E3C', color: '#FFF9F3', border: 'none' }}
+                            disabled={handleLogin.isSubmitting}>
                         Login</button>
                     <button type="button" className="btn btn-link w-100" onClick={() => navigate('/register')}>
                         Register
