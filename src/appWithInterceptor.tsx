@@ -6,12 +6,15 @@ import PrivateRoute from "./components/PrivateRoute.tsx";
 import CatDashboardPage from "./components/CatDashboardPage.tsx";
 import CatFormPage from "./components/CatFormPage.tsx";
 import CatDetailPage from "./components/CatDetailPage.tsx";
+import NavBar from "./components/NavBar.tsx";
 
 export const AppWithInterceptor = () => {
     useAxiosInterceptor();
 
     return (
         <Router>
+            <NavBar />
+            <div style={{ marginTop: '60px' }}> {/* Add margin to prevent content from being hidden behind the navbar */}
             <Routes>
                 <Route path="/login" element={<LoginForm/>}/>
                 <Route path="/register" element={<RegistrationForm/>}/>
@@ -21,6 +24,7 @@ export const AppWithInterceptor = () => {
                 <Route path="/cats/:id" element={<CatDetailPage/>}/>
                 <Route path="/" element={<LoginForm/>}/>
             </Routes>
+            </div>
         </Router>
     );
 

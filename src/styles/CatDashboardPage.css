@@ -1,0 +1,196 @@
+
+/* General Layout */
+.cat-dashboard {
+    flex: 1; /* Fills the remaining space in the flex container */
+    display: flex; /* Use Flexbox for layout alignment */
+    flex-direction: column; /* Align children vertically */
+    padding: 20px;
+}
+
+/* Container for the top image */
+.top-image-container {
+    width: 100%; /* Full-width to match the navigation bar */
+    margin: 0; /* No extra margins */
+    padding: 0; /* No extra padding */
+    text-align: center; /* Center the image if needed */
+}
+
+/* Image Styling */
+.top-banner-image {
+    width: 100%; /* Stretch to fill the width of the parent */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 500px; /* Optional: Limit maximum height */
+    object-fit: cover; /* Ensure the image covers the width proportionally */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1); /* Optional: Add a subtle border for separation */
+}
+
+.dashboard-title {
+    font-family: 'Permanent Marker', cursive; /* Cartoon-like font */
+    font-size: 3rem; /* Large size for emphasis */
+    color: #a1785c; /* Vibrant tomato red */
+    text-align: center; /* Center the title */
+    margin: 20px auto;
+    text-shadow: 2px 2px 0px #ffa500, /* Orange shadow for depth */
+    4px 4px 0px #6b3e2e; /* Darker red shadow for a layered effect */
+    position: relative;
+}
+
+/* Add a playful underline effect */
+.dashboard-title::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 5px;
+    background: linear-gradient(to right, #c38452, #e3c099);
+    margin: 10px auto 0;
+    border-radius: 5px;
+}
+
+/* Common button styles */
+.show-details-button,
+.edit-button {
+    font-size: 0.9rem; /* Smaller font size */
+    padding: 5px 10px; /* Reduce padding for a smaller button */
+    border-radius: 10px; /* Rounded corners */
+    border: none; /* Remove default borders */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth hover effects */
+}
+
+/* Show Details button */
+.show-details-button {
+    background-color: #a1785c; /* Green color for visibility */
+    color: white;
+}
+
+.show-details-button:hover {
+    background-color: #c38452; /* Slightly darker green on hover */
+}
+
+/* Edit button */
+.edit-button {
+    background-color: #a1785c; /* Blue color for visibility */
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #c38452; /* Slightly darker blue on hover */
+}
+
+/* Card Styling */
+.card {
+    border-radius: 20px;
+    padding: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    background-color: rgba(227, 192, 153, 0.5);
+    border: none; /* Removes default borders */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 30px; /* Add extra space at the top of the body */
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+/* Empty Card Styling */
+.empty-card {
+    background-color: rgba(227, 192, 153, 0.2); /* Light gray for the empty card */
+    border: 2px dashed #ccc; /* Dashed border for empty state */
+    height: 250px; /* Fixed height for consistency */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effects */
+}
+
+.empty-card:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Plus Label */
+.plus-label {
+    font-size: 3rem; /* Large font size for the "+" symbol */
+    font-weight: bold;
+    color: #666; /* Neutral color */
+}
+
+.card-img-top {
+    width: calc(100% + 40px); /* Image width to cover padding (2 * 20px padding) */
+    margin: -20px; /* Negative margin to offset padding */
+    height: auto; /* Maintains aspect ratio */
+    max-height: 500px; /* Sets a maximum height to limit the image size */
+    object-fit: cover;
+    display: block; /* Removes extra spaces below the image */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #6b3e2e;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #6b3e2e;
+    margin-bottom: 10px;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between; /* Space out buttons horizontally */
+    align-items: center;
+    margin-top: auto; /* Push buttons to the bottom of the card */
+    padding-top: 20px; /* Add some spacing above the buttons */
+    position: absolute; /* Position relative to the card container */
+    bottom: 10px; /* Align to the bottom of the card */
+    left: 30px; /* Align with card padding */
+    right: 30px;
+}
+
+.btn {
+    border-radius: 5px;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+}
+
+/* Divider styling */
+.card-divider {
+    height: 1px; /* Height of the line */
+    background-color: #ddd; /* Light gray for a subtle effect */
+    margin: 10px 0; /* Spacing above and below the line */
+    border: none; /* Remove any default border */
+    width: 100%; /* Full width of the card */
+    opacity: 0.7; /* Slight transparency for a softer look */
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .card-actions .btn {
+        margin-bottom: 10px;
+    }
+}
+
+/* Loading and Error */
+.loading-container,
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.2rem;
+}

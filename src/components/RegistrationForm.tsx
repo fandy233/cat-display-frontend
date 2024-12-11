@@ -35,9 +35,9 @@ const RegistrationForm: React.FC = () => {
     });
 
     return (
-        <div className="login-container d-flex justify-content-center align-items-center vh-100">
-            <div className="card p-4 shadow-sm" style={{maxWidth: '400px', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)',}}>
-                <h3 className="text-center mb-4">Register</h3>
+        <div className="login-container">
+            <div className="card">
+                <h3>Register</h3>
                 <form onSubmit={handleRegister.handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="username" className="form-label">Username</label>

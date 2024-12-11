@@ -17,8 +17,14 @@ html, body, #root {
   height: 100%;
   width: 100%;
   margin: 0;
-  padding: 0;
-  background-image: url('./assets/cat_background.png');
+  padding: 0; /* Removes default padding */
+  display: flex; /* Enables Flexbox for child alignment */
+  flex-direction: column; /* Align children vertically */
+  background-image: url('./assets/background.png');
+  background-position: center; /* Centers the background image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-size: cover; /* Ensures the image covers the entire viewport */
+  background-attachment: fixed; /* Makes the background fixed */
 }
 
 a {

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient, {ensureInterceptorReady} from '../services/apiClient';
+import TopCatPic from '../assets/TopCatPic.png';
+import '../styles/CatDashboardPage.css';
+
 
 interface Cat {
     id: string;
@@ -60,74 +63,66 @@ const CatDashboardPage: React.FC = () => {
     }
 
     return (
-        <div className="container mt-4">
-            <h2 className="text-center mb-4">Cat Dashboard</h2>
-            <div className="d-flex justify-content-end mb-3">
-                <button
-                    className="btn btn-primary"
-                    onClick={() => navigate('/add-cat')}
-                >
-                    Add New Cat
-                </button>
-            </div>
-            <div className="row">
+        <>
+        <div className="top-image-container">
+            <img src={TopCatPic} alt="Cute Cats" className="top-banner-image"/>
+        </div>
+            <div className="cat-dashboard container">
+            {/* Add a picture at the top */}
+            <div className="cat-cards row">
                 {cats.map((cat) => (
-                    <div key={cat.id} className="col-md-4 mb-4">
-                        <div className="card h-100">
-                            <img
-                                src={cat.imageUrl}
-                                className="card-img-top"
-                                alt={cat.name}
-                            />
-                            <div className="card-body" key={cat.id}>
-                                <h5 className="card-title">{cat.name}</h5>
-                                <p className="card-text">
-                                    <strong>Breed:</strong> {cat.breed}
-                                </p>
-                                <p className="card-text">
-                                    <strong>Gender:</strong> {cat.gender}
-                                </p>
-                                <p className="card-text">
-                                    <strong>Description:</strong> {cat.description}
-                                </p>
-                                <button
-                                    onClick={() => navigate(`/cats/${cat.id}`)}
-                                    style={{
-                                        position: 'absolute',
-                                        bottom: '10px',
-                                        left: '10px',
-                                        padding: '5px 10px',
-                                        backgroundColor: '#17a2b8',
-                                        color: '#fff',
-                                        border: 'none',
-                                        borderRadius: '5px',
-                                        cursor: 'pointer',
-                                    }}
-                                >
-                                    Show Details
-                                </button>
-                                <button
-                                    onClick={() => navigate(`/edit-cat/${cat.id}`)}
-                                    style={{
-                                        position: 'absolute',
-                                        bottom: '10px',
-                                        right: '10px',
-                                        padding: '5px 10px',
-                                        backgroundColor: '#007bff',
-                                        color: '#fff',
-                                        border: 'none',
-                                        borderRadius: '5px',
-                                        cursor: 'pointer',
-                                    }}
-                                >
-                                    Edit
-                                </button>
+                    <div key={cat.id} className="col-lg-4 col-md-6 mb-4">
+                        <div className="card">
+                                <img
+                                    src={cat.imageUrl}
+                                    className="card-img-top"
+                                    alt={cat.name}
+                                />
+                                <div className="card-body" key={cat.id}>
+                                    <h5 className="card-title">{cat.name}</h5>
+                                    <p className="card-text">
+                                        <strong>Breed:</strong> {cat.breed}
+                                    </p>
+                                    <p className="card-text">
+                                        <strong>Gender:</strong> {cat.gender}
+                                    </p>
+                                    <p className="card-text">
+                                        <strong>Description:</strong> {cat.description}
+                                    </p>
+                                    {/* Divider */}
+                                    <div className="card-divider"></div>
+                                    <div className="card-actions">
+                                        <button
+                                            className="show-details-button"
+                                            onClick={() => navigate(`/cats/${cat.id}`)}
+                                        >
+                                            Show Details
+                                        </button>
+                                        <button
+                                            className="edit-button"
+                                            onClick={() => navigate(`/edit-cat/${cat.id}`)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        ))}
+                        {/* Empty Card for Adding New Cat */}
+                <div className="col-lg-4 col-md-6 mb-4">
+                    <div
+                        className="card empty-card"
+                        onClick={() => navigate('/add-cat')}
+                    >
+                        <div className="card-body d-flex justify-content-center align-items-center">
+                            <h3 className="plus-label">+</h3>
+                        </div>
                     </div>
-                ))}
+                </div>
             </div>
         </div>
+        </>
     );
 };
 

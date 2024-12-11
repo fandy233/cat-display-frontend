@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { authAtom } from "../state/authAtoms.ts";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import '../styles/LoginPage.css'
 
 const LoginForm: React.FC = () => {
     const setAuth = useSetAtom(authAtom);
@@ -40,9 +41,9 @@ const LoginForm: React.FC = () => {
     });
 
     return (
-        <div className="login-container d-flex justify-content-center align-items-center vh-100">
-            <div className="card p-4 shadow-sm" style={{maxWidth: '400px', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)',}}>
-                <h3 className="text-center mb-4">Login</h3>
+        <div className="login-container">
+            <div className="card">
+                <h3>Login</h3>
                 <form onSubmit={handleLogin.handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="username" className="form-label">Username</label>
