@@ -62,7 +62,6 @@ export const useAxiosInterceptor = () => {
                 if (auth.token && dayjs(auth.validBefore).isAfter(now)) {
                     // Token is valid, attach to request
                     config.headers.Authorization = `Bearer ${auth.token}`;
-                    console.log('Attached Authorization header:', config.headers.Authorization);
 
                 } else if (auth.refreshToken && dayjs(auth.refreshTokenValidBefore).isAfter(now)) {
                     // Token is expired, refresh it

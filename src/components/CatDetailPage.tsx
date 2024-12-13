@@ -1,6 +1,8 @@
 import {useNavigate, useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import apiClient from '../services/apiClient';
+import dayjs from "dayjs";
+import BooleanIcon from "./BooleanIcon.tsx";
 
 interface Cat {
     id: string;
@@ -13,6 +15,16 @@ interface Cat {
     dadId: string;
     momName: string;
     dadName: string;
+    neuteredOrSprayed: boolean;
+    vaccination: number;
+    dateOfBirth: string;
+    microchip: boolean;
+    certificate: string;
+    price: number;
+    forSale: boolean;
+    age: string; // Calculated field
+    grade: string;
+    color: string;
 }
 
 const CatDetailPage = () => {
@@ -72,16 +84,30 @@ const CatDetailPage = () => {
                     }}
                 />
             )}
-            {cat.breed && <p style={{fontSize: '1.2em'}}><strong>Breed:</strong> {cat.breed}</p>}
             {cat.gender && <p style={{fontSize: '1.2em'}}><strong>Gender:</strong> {cat.gender}</p>}
+            {cat.breed && <p style={{fontSize: '1.2em'}}><strong>Breed:</strong> {cat.breed}</p>}
+            {cat.color && <p style={{fontSize: '1.2em'}}><strong>Color:</strong> {cat.color}</p>}
+            <p><strong>Microchip:</strong> <BooleanIcon value={cat.microchip}/></p>
+            <p><strong>Neutered/Sprayed:</strong> <BooleanIcon value={cat.neuteredOrSprayed}/></p>
+            <p><strong>For Sale:</strong> <BooleanIcon value={cat.forSale}/></p>
+            {cat.certificate && <p style={{fontSize: '1.2em'}}><strong>Pedigree:</strong> {cat.certificate}</p>}
+            {cat.age && <p style={{fontSize: '1.2em'}}><strong>Age:</strong> {cat.age}</p>}
+            {cat.dateOfBirth && <p style={{fontSize: '1.2em'}}>
+                <strong>Birthday:</strong> {dayjs(cat.dateOfBirth).format('MMMM D, YYYY')}</p>}
+            {cat.grade && <p style={{fontSize: '1.2em'}}><strong>Grade:</strong> {cat.grade}</p>}
+            {cat.vaccination &&
+                <p style={{fontSize: '1.2em'}}><strong>Vaccination doses:</strong> {cat.vaccination}</p>}
+            {cat.price && <p style={{fontSize: '1.2em'}}><strong>Price:</strong> {cat.price}</p>}
             {cat.momId && (
-                <p style={{ fontSize: '1.2em' }}>
-                    <strong>Mom:</strong> <span className="link" style={{ color: 'blue', cursor: 'pointer' }} onClick={() => navigate(`/cats/${cat.momId}`)}>{cat.momName}</span>
+                <p style={{fontSize: '1.2em'}}>
+                    <strong>Mom:</strong> <span className="link" style={{color: 'blue', cursor: 'pointer'}}
+                                                onClick={() => navigate(`/cats/${cat.momId}`)}>{cat.momName}</span>
                 </p>
             )}
             {cat.dadId && (
-                <p style={{ fontSize: '1.2em' }}>
-                    <strong>Dad:</strong> <span className="link" style={{ color: 'blue', cursor: 'pointer' }} onClick={() => navigate(`/cats/${cat.dadId}`)}>{cat.dadName}</span>
+                <p style={{fontSize: '1.2em'}}>
+                    <strong>Dad:</strong> <span className="link" style={{color: 'blue', cursor: 'pointer'}}
+                                                onClick={() => navigate(`/cats/${cat.dadId}`)}>{cat.dadName}</span>
                 </p>
             )}
             {cat.description &&

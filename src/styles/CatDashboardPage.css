@@ -19,9 +19,9 @@
 .top-banner-image {
     width: 100%; /* Stretch to fill the width of the parent */
     height: auto; /* Maintain aspect ratio */
-    max-height: 500px; /* Optional: Limit maximum height */
+    max-height: 500px; /* Limit maximum height */
     object-fit: cover; /* Ensure the image covers the width proportionally */
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1); /* Optional: Add a subtle border for separation */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1); /*Add a subtle border for separation */
 }
 
 .dashboard-title {
@@ -161,8 +161,8 @@
 
 /* Divider styling */
 .card-divider {
-    height: 1px; /* Height of the line */
-    background-color: #ddd; /* Light gray for a subtle effect */
+    height: 2px; /* Height of the line */
+    background-color: #e3c099;
     margin: 10px 0; /* Spacing above and below the line */
     border: none; /* Remove any default border */
     width: 100%; /* Full width of the card */
