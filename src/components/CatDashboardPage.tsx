@@ -94,7 +94,7 @@ const CatDashboardPage: React.FC = () => {
                                     <div className="card-actions">
                                         <button
                                             className="show-details-button"
-                                            onClick={() => navigate(`/cats/${cat.id}`)}
+                                            onClick={() => navigate(`/cats/${cat.id}`, { state: { from: window.location.pathname } })}
                                         >
                                             Show Details
                                         </button>

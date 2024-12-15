@@ -1,10 +1,14 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&display=swap');
 /* General Layout */
 .cat-dashboard {
     flex: 1; /* Fills the remaining space in the flex container */
     display: flex; /* Use Flexbox for layout alignment */
     flex-direction: column; /* Align children vertically */
     padding: 20px;
+    font-family: 'Baloo 2', sans-serif; /* Set Baloo 2 as the primary font */
+    font-size: 16px; /* Default font size */
+    color: #333; /* Set a clean text color */
+    line-height: 1.5; /* Adjust line height for readability */
 }
 
 /* Container for the top image */
@@ -25,7 +29,6 @@
 }
 
 .dashboard-title {
-    font-family: 'Permanent Marker', cursive; /* Cartoon-like font */
     font-size: 3rem; /* Large size for emphasis */
     color: #a1785c; /* Vibrant tomato red */
     text-align: center; /* Center the title */
@@ -49,9 +52,9 @@
 /* Common button styles */
 .show-details-button,
 .edit-button {
-    font-size: 0.9rem; /* Smaller font size */
+    font-size: 1rem; /* Smaller font size */
     padding: 5px 10px; /* Reduce padding for a smaller button */
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 20px; /* Rounded corners */
     border: none; /* Remove default borders */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s, transform 0.2s; /* Smooth hover effects */
@@ -59,22 +62,22 @@
 
 /* Show Details button */
 .show-details-button {
-    background-color: #a1785c; /* Green color for visibility */
+    background-color: #a1785c;
     color: white;
 }
 
 .show-details-button:hover {
-    background-color: #c38452; /* Slightly darker green on hover */
+    background-color: #c38452;
 }
 
 /* Edit button */
 .edit-button {
-    background-color: #a1785c; /* Blue color for visibility */
+    background-color: #a1785c;
     color: white;
 }
 
 .edit-button:hover {
-    background-color: #c38452; /* Slightly darker blue on hover */
+    background-color: #c38452;
 }
 
 /* Card Styling */
@@ -84,8 +87,11 @@
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
-    background-color: rgba(227, 192, 153, 0.5);
-    border: none; /* Removes default borders */
+    background-color: rgba(254, 246, 232, 0.9);
+    border: none; /* Removes default borders */font-family: 'Baloo 2', sans-serif; /* Set Baloo 2 as the primary font */
+    font-size: 16px; /* Default font size */
+    color: #333; /* Set a clean text color */
+    line-height: 1.5; /* Adjust line height for readability */
 }
 
 .card-body {
@@ -132,6 +138,7 @@
 .card-title {
     font-size: 1.5rem;
     font-weight: bold;
+    margin-top: 20px;
     color: #6b3e2e;
 }
 
@@ -148,13 +155,13 @@
     margin-top: auto; /* Push buttons to the bottom of the card */
     padding-top: 20px; /* Add some spacing above the buttons */
     position: absolute; /* Position relative to the card container */
-    bottom: 10px; /* Align to the bottom of the card */
+    bottom: 20px; /* Align to the bottom of the card */
     left: 30px; /* Align with card padding */
     right: 30px;
 }
 
 .btn {
-    border-radius: 5px;
+    border-radius: 20px;
     font-size: 0.9rem;
     padding: 5px 10px;
 }
@@ -162,7 +169,7 @@
 /* Divider styling */
 .card-divider {
     height: 2px; /* Height of the line */
-    background-color: #e3c099;
+    background-color: rgba(227, 192, 153, 0);
     margin: 10px 0; /* Spacing above and below the line */
     border: none; /* Remove any default border */
     width: 100%; /* Full width of the card */
@@ -181,7 +188,7 @@
     }
 
     .card-actions .btn {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
 }
 

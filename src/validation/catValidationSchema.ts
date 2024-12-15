@@ -4,7 +4,7 @@ export const catValidationSchema = yup.object().shape({
     name: yup.string().required('Name is required').max(20, 'Name cannot exceed 20 characters'),
     gender: yup.string().required('Gender is required'),
     breed: yup.string().required('Breed is required').max(20, 'Breed cannot exceed 20 characters'),
-    description: yup.string().max(50, 'Description cannot exceed 50 characters'),
+    description: yup.string().max(200, 'Description cannot exceed 200 characters'),
     dateOfBirth: yup.date().nullable(), //TODO change to date format
     certificate: yup.string().oneOf(['None', 'CFA', 'TICA'], 'Invalid certificate option'),
     neuteredOrSprayed: yup.boolean(),

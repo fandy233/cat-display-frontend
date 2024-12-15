@@ -40,6 +40,7 @@ const navContentStyle: React.CSSProperties = {
     alignItems: 'center',
     width: '100%',
     maxWidth: '1200px',
+    color: '#fff9f3',
 };
 
 const spacerStyle: React.CSSProperties = {
@@ -61,6 +62,7 @@ const logoutContainerStyle: React.CSSProperties = {
     flex: 1,
     display: 'flex',
     justifyContent: 'flex-end',
+    color: '#fff9f3',
 };
 
 export default NavBar;

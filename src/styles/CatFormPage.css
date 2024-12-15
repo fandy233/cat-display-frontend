@@ -1,0 +1,95 @@
+/* CatFormPage.css */
+
+.cat-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.card {
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    background-color: rgba(254, 246, 232, 0.8);
+}
+
+h3 {
+    font-family: 'Baloo 2', sans-serif; /* Fun cartoon-style font */
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #8B5E3C; /* Match the button color */
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.form-control {
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 5px; /* Rounded input */
+    padding: 10px;
+    margin-left: 8px;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545; /* Red border for invalid fields */
+}
+
+.invalid-feedback {
+    color: #dc3545; /* Red text for error messages */
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+button {
+    border-radius: 5px;
+    font-family: 'Baloo 2', sans-serif;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9; /* Slight fade effect on hover */
+}
+
+.btn-link {
+    color: #8B5E3C;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+.btn-link:hover {
+    color: #5F3A21; /* Slightly darker color on hover */
+}
+
+/* Container for input with symbol */
+.input-with-symbol {
+    display: flex; /* Align items horizontally */
+    align-items: center; /* Vertically align the dollar symbol and input */
+    position: relative; /* Needed for proper positioning */
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+
+/* Dollar symbol styling */
+.symbol {
+    font-size: 1.2rem; /* Adjust font size */
+    font-weight: bold; /* Make the dollar symbol stand out */
+    margin-right: 8px; /* Add spacing between the symbol and the input */
+    color: #8B5E3C;
+}
+
+/* Input styling */
+.input-with-symbol .form-control {
+    flex: 1; /* Allow input to take up remaining space */
+    padding-left: 10px; /* Ensure input content is not too close to the edges */
+}
+

@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&display=swap');
+
+
+.cat-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: rgba(254, 246, 232, 0.8);
+    text-align: left; /* Default left alignment for details */
+}
+
+.back-button {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #a1785c;
+    color: #fff;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #c38452;
+}
+
+.cat-header {
+    text-align: center; /* Center name and image */
+    margin-bottom: 20px;
+    font-family: 'Comic Sans MS', 'Poppins', sans-serif; /* Playful font */
+    font-size: 1.5rem; /* Adjust font size for better readability */
+    letter-spacing: 0.02em; /* Slightly increase spacing between letters */
+    line-height: 1.2; /* Reduce line height for tighter alignment */
+}
+
+.cat-header h2 {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.cat-header .cat-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.cat-details-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* Left columns, divider, right columns */
+    gap: 10px; /* Add spacing between items */
+    text-align: left; /* Left-align text */
+    margin-left: 40px;
+    align-items: start; /* Align items at the top */
+    font-size: 1.2rem; /* Adjust font size as needed */
+}
+
+.left-columns, .right-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns per section */
+    gap: 10px; /* Space between fields in each section */
+}
+
+.divider {
+    margin-right: 35px;
+    width: 1px; /* Thin vertical line */
+    background-color: #ccc; /* Light gray color for the divider */
+    height: 100%; /* Make the divider span the entire height */
+    align-self: stretch; /* Ensures the divider stretches fully */
+}
+/* Horizontal Divider Below the Image */
+.horizontal-divider {
+    height: 1px; /* Thin horizontal line */
+    background-color: #ccc; /* Light gray color */
+    margin: 20px 0; /* Add spacing above and below */
+    width: 100%; /* Stretch across the container */
+}
+
+.field-name {
+    font-weight: bold;
+}
+
+.field-value {
+    margin-left: 10px;
+    margin-top: 2px;
+    font-family: 'Comic Sans MS', 'Poppins', sans-serif; /* Playful font */
+    font-size: 1rem; /* Adjust font size for better readability */
+    letter-spacing: 0.02em; /* Slightly increase spacing between letters */
+
+
+}
+
+
+.description-container {
+    margin-top: 20px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    height: auto; /* Adjust height based on content */
+}
+
+.description-background {
+    background-image: url('../assets/catDetailBackground.png'); /* Replace with your image path */
+    background-size: cover; /* Ensure the image covers the entire container */
+    background-position: center; /* Center the image */
+    padding: 100px; /* Increase padding for a larger container */
+    border-radius: 20px; /* Add rounded corners */
+    color: saddlebrown; /* Ensure text is readable against the background */
+    font-size: 1.5rem; /* Make the text larger */
+
+}
+
+.description-background:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 246, 232, 0.3); /* Adjust transparency here */
+    z-index: 1; /* Layer the overlay above the background */
+    border-radius: 10px;
+}
+
+.description-background strong,
+.description-background p {
+    position: relative; /* Keep text above the background */
+    z-index: 2;
+    text-align: left; /* Align text to the top-left */
+    margin-top: 0;; /* Remove any default margin from text */
+}
+
+.description-label {
+    position: absolute;
+    top: -30px; /* Adjust spacing from the top */
+    left: 20px; /* Adjust spacing from the left */
+    font-weight: bold;
+    font-size: 1.5rem; /* Adjust label font size */
+    z-index: 2; /* Ensure it's above the background */
+    margin: 0;
+}
+
+.description-value {
+    position: relative;
+    z-index: 2; /* Ensure it's above the background */
+    padding: 20px; /* Add padding to adjust text position */
+    font-size: 1.2rem; /* Adjust font size for the description */
+    text-align: left; /* Align text */
+    font-family: 'Comic Sans MS', 'Poppins', sans-serif; /* Playful font */
+    letter-spacing: 0.02em; /* Slightly increase spacing between letters */
+    line-height: 1.2; /* Reduce line height for tighter alignment */
+}
+
+.link {
+    color: #243850;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.comic-checkmark {
+    font-family: 'Permanent Marker', cursive; /* Use a cartoon font */
+    font-size: 1.2rem; /* Adjust size */
+    color: #4CAF50; /* Green for checked */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3); /* Add a playful shadow */
+
+}
+
+.comic-cross {
+    font-family: 'Permanent Marker', cursive; /* Same font for consistency */
+    font-size: 1.2rem;
+    color: #F44336; /* Red for unchecked */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+}
+

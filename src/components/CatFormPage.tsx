@@ -4,6 +4,7 @@ import apiClient, {ensureInterceptorReady} from '../services/apiClient';
 import { useFormik } from 'formik';
 import {catValidationSchema} from "../validation/catValidationSchema.ts";
 import 'react-datepicker/dist/react-datepicker.css';
+import '../styles/CatFormPage.css';
 import ReactDatePicker from "react-datepicker";
 
 interface Cat {
@@ -143,7 +144,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
     });
 
     return (
-        <div className="container">
+        <div className="cat-form-container">
             <div className="card">
                 <h2>{isEdit ? 'Edit Cat' : 'Add New Cat'}</h2>
                 {error && (
@@ -209,7 +210,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                         {formik.touched.gender && formik.errors.gender &&
                             <div className="error">{formik.errors.gender}</div>}
                     </div>
-                    <div className="form-group">
+                    <div className="form-group form-label">
                         <label>
                             <input
                                 type="checkbox"
@@ -220,7 +221,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                             Neutered/Sprayed
                         </label>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group form-label">
                         <label>
                             <input
                                 type="checkbox"
@@ -231,7 +232,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                             Microchip
                         </label>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group form-label">
                         <label>
                             <input
                                 type="checkbox"
@@ -243,7 +244,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                         </label>
                     </div>
                     <div className="form-group">
-                        <label>for pet/for breeding</label>
+                        <label className="form-label">for pet/for breeding</label>
                         <select
                             name="grade"
                             value={formik.values.grade}
@@ -254,7 +255,7 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Vaccination Doses</label>
+                        <label className="form-label">Vaccination Doses</label>
                         <select
                             name="vaccination"
                             value={formik.values.vaccination}
@@ -267,121 +268,128 @@ const CatFormPage = ({ isEdit }: { isEdit: boolean }) => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Price</label>
-                        <input
-                            type="text"
-                            name="price"
-                            value={formik.values.price}
-                            onChange={formik.handleChange}
-                        />
+                        <label className="form-label">Price</label>
+                        <div className="input-with-symbol">
+                            <span className="symbol">$</span>
+                            <input
+                                type="text"
+                                name="price"
+                                value={formik.values.price}
+                                placeholder="Enter the price in USD"
+                                onChange={formik.handleChange}
+                            />
+                        </div>
                         {formik.touched.price && formik.errors.price && (
                             <div className="error">{formik.errors.price}</div>
                         )}
-                    </div>
-                    {/* Add the DatePicker Field */}
-                    <div className="form-group">
-                        <label htmlFor="dateOfBirth" className="form-label">Date of Birth</label>
-                        <ReactDatePicker
-                            selected={
-                                formik.values.dateOfBirth
-                                    ? new Date(formik.values.dateOfBirth)
-                                    : null
-                            }
-                            onChange={(date) => {
-                                const formattedDate = date
-                                    ? date.toISOString().split('T')[0]
-                                    : '';
-                                formik.setFieldValue('dateOfBirth', formattedDate);
-                            }}
-                            placeholderText="Select a date"
-                            dateFormat="yyyy-MM-dd"
-                            isClearable
-                            dropdownMode="select"
-                            maxDate={new Date()} // Restricts to today and earlier
-                        />
-                        {formik.touched.dateOfBirth && formik.errors.dateOfBirth && (
-                            <div className="error">{formik.errors.dateOfBirth}</div>
-                        )}
-                    </div>
-                    <div className="form-group">
-                        <label>Certificate</label>
-                        <select
-                            name="certificate"
-                            value={formik.values.certificate}
-                            onChange={formik.handleChange}
-                        >
-                            <option value="None">None</option>
-                            <option value="CFA">CFA</option>
-                            <option value="TICA">TICA</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Mom:</label>
-                        <select
-                            name="momId"
-                            value={formik.values.momId}
-                            onChange={(e) => {
-                                const selectedMomId = e.target.value;
-                                const selectedMom = cats.find((cat) => cat.id === selectedMomId);
-
-                                formik.setFieldValue('momId', selectedMomId);
-                                formik.setFieldValue('momName', selectedMom ? selectedMom.name : '');
-                            }}
-                        >
-                            <option value="">Select Mom</option>
-                            {cats.map((cat) => (
-                                <option key={cat.id} value={cat.id}>{cat.name}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label>Dad:</label>
-                        <select
-                            name="dadId"
-                            value={formik.values.dadId}
-                            onChange={(e) => {
-                                const selectedDadId = e.target.value;
-                                const selectedDad = cats.find((cat) => cat.id === selectedDadId);
-
-                                formik.setFieldValue('dadId', selectedDadId);
-                                formik.setFieldValue('dadName', selectedDad ? selectedDad.name : '');
-                            }}
-                        >
-                            <option value="">Select Dad</option>
-                            {cats.map((cat) => (
-                                <option key={cat.id} value={cat.id}>{cat.name}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="description" className="form-label">
-                            Description
-                        </label>
-                        <textarea
-                            name="description"
-                            value={formik.values.description}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            rows={3}
-                        ></textarea>
-                        {formik.touched.description && formik.errors.description && (
-                            <div className="error">{formik.errors.description}</div>
-                        )}
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                if (e.target.files?.[0]) {
-                                    handleImageUpload(e.target.files[0]);
+                        </div>
+                        {/* Add the DatePicker Field */}
+                        <div className="form-group form-label">
+                            <label htmlFor="dateOfBirth" className="form-label">Date of Birth</label>
+                            <ReactDatePicker
+                                selected={
+                                    formik.values.dateOfBirth
+                                        ? new Date(formik.values.dateOfBirth)
+                                        : null
                                 }
-                            }}
-                            disabled={isUploading} // Disable the input while uploading
-                        />
-                        {isUploading && <p>Uploading image, please wait...</p>}
-                        <button disabled={isUploading} type="submit">{isEdit ? 'Update Cat' : 'Add Cat'}</button>
-                    </div>
+                                onChange={(date) => {
+                                    const formattedDate = date
+                                        ? date.toISOString().split('T')[0]
+                                        : '';
+                                    formik.setFieldValue('dateOfBirth', formattedDate);
+                                }}
+                                placeholderText="Select a date"
+                                dateFormat="yyyy-MM-dd"
+                                isClearable
+                                dropdownMode="select"
+                                maxDate={new Date()} // Restricts to today and earlier
+                            />
+                            {formik.touched.dateOfBirth && formik.errors.dateOfBirth && (
+                                <div className="error">{formik.errors.dateOfBirth}</div>
+                            )}
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">Certificate</label>
+                            <select
+                                name="certificate"
+                                value={formik.values.certificate}
+                                onChange={formik.handleChange}
+                            >
+                                <option value="None">None</option>
+                                <option value="CFA">CFA</option>
+                                <option value="TICA">TICA</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="form-label">Mom</label>
+                            <select
+                                name="momId"
+                                value={formik.values.momId}
+                                onChange={(e) => {
+                                    const selectedMomId = e.target.value;
+                                    const selectedMom = cats.find((cat) => cat.id === selectedMomId);
+
+                                    formik.setFieldValue('momId', selectedMomId);
+                                    formik.setFieldValue('momName', selectedMom ? selectedMom.name : '');
+                                }}
+                            >
+                                <option value="">Select Mom</option>
+                                {cats.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="form-label">Dad</label>
+                            <select
+                                name="dadId"
+                                value={formik.values.dadId}
+                                onChange={(e) => {
+                                    const selectedDadId = e.target.value;
+                                    const selectedDad = cats.find((cat) => cat.id === selectedDadId);
+
+                                    formik.setFieldValue('dadId', selectedDadId);
+                                    formik.setFieldValue('dadName', selectedDad ? selectedDad.name : '');
+                                }}
+                            >
+                                <option value="">Select Dad</option>
+                                {cats.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="description" className="form-label">
+                                Description
+                            </label>
+                            <textarea
+                                name="description"
+                                value={formik.values.description}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                rows={3}
+                            ></textarea>
+                            {formik.touched.description && formik.errors.description && (
+                                <div className="error">{formik.errors.description}</div>
+                            )}
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">
+                                Images
+                            </label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                    if (e.target.files?.[0]) {
+                                        handleImageUpload(e.target.files[0]);
+                                    }
+                                }}
+                                disabled={isUploading} // Disable the input while uploading
+                            />
+                            {isUploading && <p>Uploading image, please wait...</p>}
+                            <button disabled={isUploading} type="submit">{isEdit ? 'Update Cat' : 'Add Cat'}</button>
+                        </div>
                 </form>
             </div>
         </div>

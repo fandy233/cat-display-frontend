@@ -1,8 +1,8 @@
-import {useNavigate, useParams} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import apiClient from '../services/apiClient';
 import dayjs from "dayjs";
-import BooleanIcon from "./BooleanIcon.tsx";
+import '../styles/CatDetailPage.css';
 
 interface Cat {
     id: string;
@@ -33,6 +33,7 @@ const CatDetailPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const fetchCatDetails = async () => {
@@ -66,52 +67,172 @@ const CatDetailPage = () => {
             maxWidth: '800px',
             margin: '0 auto',
             padding: '20px',
-            textAlign: 'center',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             borderRadius: '10px'
         }}>
-            <h2 style={{color: '#333'}}>{cat.name}</h2>
-            {cat.imageUrl && (
-                <img
-                    src={cat.imageUrl}
-                    alt={cat.name}
-                    style={{
-                        width: '300px',
-                        height: '300px',
-                        objectFit: 'cover',
-                        borderRadius: '15px',
-                        margin: '20px 0'
-                    }}
-                />
+            {/* Back Button */}
+            <button
+                className="back-button"
+                onClick={() => navigate(location.state?.from || '/dashboard')}
+            >
+                Back
+            </button>
+            <div className="cat-header" style={{textAlign: 'center'}}>
+                <h2 style={{color: '#333'}}>{cat.name}</h2>
+                {cat.imageUrl && (
+                    <img
+                        src={cat.imageUrl}
+                        alt={cat.name}
+                        style={{
+                            width: '300px',
+                            height: '300px',
+                            objectFit: 'cover',
+                            borderRadius: '15px',
+                            margin: '20px 0'
+                        }}
+                    />
+                )}
+            </div>
+            {/* Divider Below the Image */}
+            <div className="divider horizontal-divider"></div>
+            <div className="cat-details-grid">
+                {/* Left side columns */}
+                <div className="left-columns">
+                    {cat.gender && (
+                        <>
+                            <div className="field-name">Gender:</div>
+                            <div className="field-value">{cat.gender}</div>
+                        </>
+                    )}
+                    {cat.breed && (
+                        <>
+                            <div className="field-name">Breed:</div>
+                            <div className="field-value">{cat.breed}</div>
+                        </>
+                    )}
+                    {cat.color && (
+                        <>
+                            <div className="field-name">Color:</div>
+                            <div className="field-value">{cat.color}</div>
+                        </>
+                    )}
+                    {cat.dateOfBirth && (
+                        <>
+                            <div className="field-name">Birthday:</div>
+                            <div className="field-value">
+                                {dayjs(cat.dateOfBirth).format('MMMM D, YYYY')}
+                            </div>
+                        </>
+                    )}
+                    {cat.age && (
+                        <>
+                            <div className="field-name">Age:</div>
+                            <div className="field-value">{cat.age}</div>
+                        </>
+                    )}
+                    <div className="field-name">Neutered/Sprayed:</div>
+                    <div className="field-value">
+                        {cat.neuteredOrSprayed ? (
+                            <span className="comic-checkmark">✔</span>
+                        ) : (
+                            <span className="comic-cross">✘</span>
+                        )}
+                    </div>
+
+                    {cat.vaccination && (
+                        <>
+                            <div className="field-name">Vaccination doses:</div>
+                            <div className="field-value">{cat.vaccination}</div>
+                        </>
+                    )}
+                </div>
+                {/* Divider */}
+                <div className="divider"></div>
+                {/* Right side columns */}
+                <div className="right-columns">
+                    <div className="field-name">For Sale:</div>
+                    <div className="field-value">
+                        {cat.forSale ? (
+                            <span className="comic-checkmark">✔</span>
+                        ) : (
+                            <span className="comic-cross">✘</span>
+                        )}
+                    </div>
+
+                    {cat.certificate && (
+                        <>
+                            <div className="field-name">Pedigree:</div>
+                            <div className="field-value">{cat.certificate}</div>
+                        </>
+                    )}
+                    <div className="field-name">Microchip:</div>
+                    <div className="field-value">
+                        {cat.microchip ? (
+                            <span className="comic-checkmark">✔</span>
+                        ) : (
+                            <span className="comic-cross">✘</span>
+                        )}
+                    </div>
+                    {cat.grade && (
+                        <>
+                            <div className="field-name">Grade:</div>
+                            <div className="field-value">{cat.grade}</div>
+                        </>
+                    )}
+                    {cat.momId && (
+                        <>
+                            <div className="field-name">Mom:</div>
+                            <div className="field-value">
+                        <span
+                            className="link"
+                            style={{color: 'blue', cursor: 'pointer'}}
+                            onClick={() =>
+                                navigate(`/cats/${cat.momId}`, {state: {from: window.location.pathname}})}
+                        >
+                            {cat.momName}
+                        </span>
+                            </div>
+                        </>
+                    )}
+                    {cat.dadId && (
+                        <>
+                            <div className="field-name">Dad:</div>
+                            <div className="field-value">
+                        <span
+                            className="link"
+                            style={{color: 'blue', cursor: 'pointer'}}
+                            onClick={() =>
+                                navigate(`/cats/${cat.dadId}`, {state: {from: window.location.pathname}})}
+                        >
+                            {cat.dadName}
+                        </span>
+                            </div>
+                        </>
+                    )}
+                    {cat.price && (
+                        <>
+                            <div className="field-name">Price:</div>
+                            <div className="field-value">
+                                {new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                }).format(Number(cat.price))} {/* Ensure cat.price is a number */}
+                            </div>
+                        </>
+                    )}
+                </div>
+            </div>
+            <div className="divider horizontal-divider"></div>
+            {cat.description && (
+                <div className="description-container">
+                <div className="description-background">
+                        <strong className="description-label">Description:</strong>
+                        <div className="description-value">
+                            <p>{cat.description}</p>
+                        </div>
+                    </div>
+                </div>
             )}
-            {cat.gender && <p style={{fontSize: '1.2em'}}><strong>Gender:</strong> {cat.gender}</p>}
-            {cat.breed && <p style={{fontSize: '1.2em'}}><strong>Breed:</strong> {cat.breed}</p>}
-            {cat.color && <p style={{fontSize: '1.2em'}}><strong>Color:</strong> {cat.color}</p>}
-            <p><strong>Microchip:</strong> <BooleanIcon value={cat.microchip}/></p>
-            <p><strong>Neutered/Sprayed:</strong> <BooleanIcon value={cat.neuteredOrSprayed}/></p>
-            <p><strong>For Sale:</strong> <BooleanIcon value={cat.forSale}/></p>
-            {cat.certificate && <p style={{fontSize: '1.2em'}}><strong>Pedigree:</strong> {cat.certificate}</p>}
-            {cat.age && <p style={{fontSize: '1.2em'}}><strong>Age:</strong> {cat.age}</p>}
-            {cat.dateOfBirth && <p style={{fontSize: '1.2em'}}>
-                <strong>Birthday:</strong> {dayjs(cat.dateOfBirth).format('MMMM D, YYYY')}</p>}
-            {cat.grade && <p style={{fontSize: '1.2em'}}><strong>Grade:</strong> {cat.grade}</p>}
-            {cat.vaccination &&
-                <p style={{fontSize: '1.2em'}}><strong>Vaccination doses:</strong> {cat.vaccination}</p>}
-            {cat.price && <p style={{fontSize: '1.2em'}}><strong>Price:</strong> {cat.price}</p>}
-            {cat.momId && (
-                <p style={{fontSize: '1.2em'}}>
-                    <strong>Mom:</strong> <span className="link" style={{color: 'blue', cursor: 'pointer'}}
-                                                onClick={() => navigate(`/cats/${cat.momId}`)}>{cat.momName}</span>
-                </p>
-            )}
-            {cat.dadId && (
-                <p style={{fontSize: '1.2em'}}>
-                    <strong>Dad:</strong> <span className="link" style={{color: 'blue', cursor: 'pointer'}}
-                                                onClick={() => navigate(`/cats/${cat.dadId}`)}>{cat.dadName}</span>
-                </p>
-            )}
-            {cat.description &&
-                <p style={{fontSize: '1.2em', color: '#666'}}><strong>Description:</strong> {cat.description}</p>}
         </div>
     );
 };
