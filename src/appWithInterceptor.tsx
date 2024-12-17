@@ -7,6 +7,7 @@ import CatDashboardPage from "./components/CatDashboardPage.tsx";
 import CatFormPage from "./components/CatFormPage.tsx";
 import CatDetailPage from "./components/CatDetailPage.tsx";
 import NavBar from "./components/NavBar.tsx";
+import InfoCardPage from "./components/InfoCardPage.tsx";
 
 export const AppWithInterceptor = () => {
     useAxiosInterceptor();
@@ -22,6 +23,7 @@ export const AppWithInterceptor = () => {
                 <Route path="/add-cat" element={<PrivateRoute><CatFormPage isEdit={false}/></PrivateRoute>}/>
                 <Route path="/edit-cat/:id" element={<PrivateRoute><CatFormPage isEdit={true}/></PrivateRoute>}/>
                 <Route path="/cats/:id" element={<CatDetailPage/>}/>
+                <Route path="/cat/:id/info-card" element={<InfoCardPage />} />
                 <Route path="/" element={<LoginForm/>}/>
             </Routes>
             </div>

@@ -35,6 +35,11 @@ const CatDetailPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const handleGenerateInfoCard = () => {
+        // Navigate to the info card generation page
+        navigate(`/cat/${id}/info-card`);
+    };
+
     useEffect(() => {
         const fetchCatDetails = async () => {
             try {
@@ -77,6 +82,7 @@ const CatDetailPage = () => {
             >
                 Back
             </button>
+            <button onClick={handleGenerateInfoCard}>Generate Info Card</button>
             <div className="cat-header" style={{textAlign: 'center'}}>
                 <h2 style={{color: '#333'}}>{cat.name}</h2>
                 {cat.imageUrl && (
@@ -225,7 +231,7 @@ const CatDetailPage = () => {
             <div className="divider horizontal-divider"></div>
             {cat.description && (
                 <div className="description-container">
-                <div className="description-background">
+                    <div className="description-background">
                         <strong className="description-label">Description:</strong>
                         <div className="description-value">
                             <p>{cat.description}</p>

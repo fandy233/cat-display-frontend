@@ -1,0 +1,75 @@
+/* General layout */
+.info-card-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.back-button,
+.download-button {
+    background-color: #c38452;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.back-button:hover,
+.download-button:hover {
+    background-color: #c38452;
+}
+
+/* Card styling */
+.info-card {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/* Header styling */
+.card-header h2 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.cat-image {
+    display: block;
+    margin: 20px auto;
+    border-radius: 15px;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* Details layout */
+.card-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.details-column {
+    width: 45%;
+    text-align: left;
+}
+
+.details-column p {
+    margin: 5px 0;
+}
+
+/* Description styling */
+.description-section {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
