@@ -5,9 +5,9 @@
     display: flex; /* Use Flexbox for layout alignment */
     flex-direction: column; /* Align children vertically */
     padding: 20px;
-    font-family: 'Baloo 2', sans-serif; /* Set Baloo 2 as the primary font */
+    font-family: 'Baloo 2', sans-serif;
     font-size: 16px; /* Default font size */
-    color: #333; /* Set a clean text color */
+    color: #333;
     line-height: 1.5; /* Adjust line height for readability */
 }
 
@@ -16,7 +16,7 @@
     width: 100%; /* Full-width to match the navigation bar */
     margin: 0; /* No extra margins */
     padding: 0; /* No extra padding */
-    text-align: center; /* Center the image if needed */
+    text-align: center;
 }
 
 /* Image Styling */
@@ -25,16 +25,16 @@
     height: auto; /* Maintain aspect ratio */
     max-height: 500px; /* Limit maximum height */
     object-fit: cover; /* Ensure the image covers the width proportionally */
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1); /*Add a subtle border for separation */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1); /*Add a border for separation */
 }
 
 .dashboard-title {
     font-size: 3rem; /* Large size for emphasis */
-    color: #a1785c; /* Vibrant tomato red */
+    color: #a1785c;
     text-align: center; /* Center the title */
     margin: 20px auto;
-    text-shadow: 2px 2px 0px #ffa500, /* Orange shadow for depth */
-    4px 4px 0px #6b3e2e; /* Darker red shadow for a layered effect */
+    text-shadow: 2px 2px 0px #ffa500,
+    4px 4px 0px #6b3e2e;
     position: relative;
 }
 
@@ -52,7 +52,7 @@
 /* Common button styles */
 .show-details-button,
 .edit-button {
-    font-size: 1rem; /* Smaller font size */
+    font-size: 1rem;
     padding: 5px 10px; /* Reduce padding for a smaller button */
     border-radius: 20px; /* Rounded corners */
     border: none; /* Remove default borders */
@@ -88,9 +88,10 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
     background-color: rgba(254, 246, 232, 0.9);
-    border: none; /* Removes default borders */font-family: 'Baloo 2', sans-serif; /* Set Baloo 2 as the primary font */
-    font-size: 16px; /* Default font size */
-    color: #333; /* Set a clean text color */
+    border: none; /* Removes default borders */
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 16px;
+    color: #333;
     line-height: 1.5; /* Adjust line height for readability */
 }
 
@@ -107,7 +108,7 @@
 
 /* Empty Card Styling */
 .empty-card {
-    background-color: rgba(227, 192, 153, 0.2); /* Light gray for the empty card */
+    background-color: rgba(227, 192, 153, 0.2);
     border: 2px dashed #ccc; /* Dashed border for empty state */
     height: 250px; /* Fixed height for consistency */
     cursor: pointer; /* Pointer cursor on hover */

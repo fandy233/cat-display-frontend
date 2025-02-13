@@ -1,8 +1,10 @@
 import {useEffect, useRef, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import { toPng } from 'html-to-image';
 import '../styles/InfoCardPage.css';
-import apiClient from "../services/apiClient.ts"; // Import the custom CSS
+import apiClient from "../services/apiClient.ts";
+import pawsImage from '../assets/paws01.png';
+import borderImage from '../assets/border_image_1.jpg';
+import domtoimage from 'dom-to-image-more';
 
 interface Cat {
     id: string;
@@ -52,16 +54,26 @@ const InfoCardPage = () => {
 
     const handleDownload = () => {
         if (cardRef.current) {
-            toPng(cardRef.current)
-                .then((dataUrl) => {
+            domtoimage.toPng(cardRef.current, {
+                width: cardRef.current.offsetWidth + 20, // Use the rendered width
+                height: cardRef.current.offsetHeight + 20, // Use the rendered height
+                style: {
+                    backgroundColor: 'white', // Ensure background is white
+                    margin: '0px', // Adjust capture starting position
+                    padding: '10px', // Adds buffer space
+                    transform: 'scale(1)', // Shift capture area
+                    transformOrigin: 'top left', // Proper scaling origin
+                },
+            })
+                .then((dataUrl:string) => {
                     const link = document.createElement('a');
-                    link.download = `cat-info-card.png`;
+                    link.download = 'cat-info-card.png';
                     link.href = dataUrl;
                     link.click();
                 })
-                .catch((error) => console.error('Error generating image:', error));
-        } else {
-            console.error('Card reference is null');
+                .catch((error:Error) => {
+                    console.error('Error generating image:', error);
+                });
         }
     };
 
@@ -79,65 +91,82 @@ const InfoCardPage = () => {
 
     return (
         <div className="info-card-page">
-            <button className="back-button" onClick={() => navigate(-1)}>
-                Back
-            </button>
-            <div ref={cardRef} className="info-card">
-                <div className="card-header">
-                    <h2>{cat.name}</h2>
-                    {cat.imageUrl && (
-                        <img
-                            src={cat.imageUrl}
-                            alt={cat.name}
-                            className="cat-image"
-                        />
+            <div ref={cardRef} className="info-card-wrapper">
+                <img src={borderImage} className="border-image" alt="Border"/>
+                <div className="info-card">
+                    <div className="card-content">
+                        {/* Left Section: Photo */}
+                        <div className="photo-section">
+                            {cat.imageUrl && (
+                                <img
+                                    src={cat.imageUrl}
+                                    alt={cat.name}
+                                    className="cat-image"
+                                />
+                            )}
+                        </div>
+
+                        {/* Right Section: Info */}
+                        <div className="info-section">
+                            <div className="info-tittle">Info Card</div>
+                            {/* Divider Below the Title */}
+                            <div className="divider horizontal-divider"></div>
+                            <div className="info-columns">
+                                <div className="info-column">
+                                    {cat.gender && <p><strong>Gender:</strong> {cat.gender}</p>}
+                                    {cat.breed && <p><strong>Breed:</strong> {cat.breed}</p>}
+                                    {cat.color && <p><strong>Color:</strong> {cat.color}</p>}
+                                    {cat.dateOfBirth && <p><strong>Birthday:</strong> {cat.dateOfBirth}</p>}
+                                    {cat.age && <p><strong>Age:</strong> {cat.age}</p>}
+                                    <p>
+                                        <strong>Neutered/Sprayed:</strong>{' '}
+                                        {cat.neuteredOrSprayed ? '✔' : '✘'}
+                                    </p>
+                                </div>
+                                <div className="info-column">
+                                    <p>
+                                        <strong>For Sale:</strong> {cat.forSale ? '✔' : '✘'}
+                                    </p>
+                                    {cat.certificate && (
+                                        <p><strong>Certificate:</strong> {cat.certificate}</p>
+                                    )}
+                                    <p>
+                                        <strong>Microchip:</strong> {cat.microchip ? '✔' : '✘'}
+                                    </p>
+                                    {cat.price && (
+                                        <p>
+                                            <strong>Price:</strong>{' '}
+                                            {new Intl.NumberFormat('en-US', {
+                                                style: 'currency',
+                                                currency: 'USD',
+                                            }).format(Number(cat.price))}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Description Section */}
+                    {cat.description && (
+                        <div className="description-section">
+                            <strong>Description:</strong>
+                            <p>{cat.description}</p>
+                        </div>
                     )}
                 </div>
-                <div className="card-details">
-                    <div className="details-column">
-                        {cat.gender && <p><strong>Gender:</strong> {cat.gender}</p>}
-                        {cat.breed && <p><strong>Breed:</strong> {cat.breed}</p>}
-                        {cat.color && <p><strong>Color:</strong> {cat.color}</p>}
-                        {cat.dateOfBirth && <p><strong>Birthday:</strong> {cat.dateOfBirth}</p>}
-                        {cat.age && <p><strong>Age:</strong> {cat.age}</p>}
-                        <p>
-                            <strong>Neutered/Sprayed:</strong>{' '}
-                            {cat.neuteredOrSprayed ? '✔' : '✘'}
-                        </p>
-                    </div>
-                    <div className="details-column">
-                        <p>
-                            <strong>For Sale:</strong> {cat.forSale ? '✔' : '✘'}
-                        </p>
-                        {cat.certificate && (
-                            <p><strong>Certificate:</strong> {cat.certificate}</p>
-                        )}
-                        <p>
-                            <strong>Microchip:</strong> {cat.microchip ? '✔' : '✘'}
-                        </p>
-                        {cat.price && (
-                            <p>
-                                <strong>Price:</strong>{' '}
-                                {new Intl.NumberFormat('en-US', {
-                                    style: 'currency',
-                                    currency: 'USD',
-                                }).format(Number(cat.price))}
-                            </p>
-                        )}
-                    </div>
-                </div>
-                {cat.description && (
-                    <div className="description-section">
-                        <strong>Description:</strong>
-                        <p>{cat.description}</p>
-                    </div>
-                )}
+                <img src={pawsImage} className="paw-image" alt="Decorative Paws"/>
             </div>
-            <button className="download-button" onClick={handleDownload}>
-                Download Info Card
-            </button>
-        </div>
-    );
-};
+            <div className="button-container">
+                <button className="info-back-button" onClick={() => navigate(-1)}>
+                        Back
+                    </button>
+                    <button className="download-button" onClick={handleDownload}>
+                        Generate Info Card
+                    </button>
+                </div>
+            </div>
+            );
+            };
 
-export default InfoCardPage;
+            export default InfoCardPage;

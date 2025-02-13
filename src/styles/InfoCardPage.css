@@ -1,75 +1,165 @@
-/* General layout */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&display=swap');
+/* Card container */
+
 .info-card-page {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
+    display: flex; /* Enables flexbox */
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+    min-height: 100vh; /* Ensures full-page height */
+    padding: 20px; /* Adds spacing */
 }
 
-.back-button,
-.download-button {
-    background-color: #c38452;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+.info-card-wrapper {
+    position: relative;
+    display: block;
+    width: 800px; /* Match card width */
+    height: auto;
+    border-radius: 15px; /* Rounded corners */
 }
 
-.back-button:hover,
-.download-button:hover {
-    background-color: #c38452;
-}
 
-/* Card styling */
+
 .info-card {
-    border: 2px solid #ccc;
-    border-radius: 10px;
+    position: relative;
+    width: 800px;
     padding: 20px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    background-color: white;
+    background-image: url('../assets/InfoCardBackground.jpg'); /* Background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 15px; /* Match corners */
+    margin: 0 auto;
+    font-family: 'Baloo 2', sans-serif;
+    overflow: hidden;
+    color: #6b3e2e;
+    z-index: 1; /* Ensure card content stays above the border */
 }
 
-/* Header styling */
-.card-header h2 {
-    font-size: 24px;
-    color: #333;
-    text-align: center;
+
+/* Card content: Photo and Info side-by-side */
+.card-content {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+/* Photo Section */
+
+.photo-section {
+    flex: 1;
+    position: relative;
+    display: inline-block; /* Ensures proper containment for pseudo-elements */
+    border-radius: 15px;
 }
 
 .cat-image {
-    display: block;
-    margin: 20px auto;
+    width: 100%;
+    height: auto;
     border-radius: 15px;
-    width: 300px;
-    height: 300px;
     object-fit: cover;
+    display: block; /* Ensures proper alignment */
+    position: relative; /* Keeps the image inside the container */
+    z-index: 1; /* Ensures it stays above the pseudo-element */
 }
 
-/* Details layout */
-.card-details {
+/* Info Section */
+.info-section {
+    flex: 2;
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.details-column {
-    width: 45%;
-    text-align: left;
+.info-columns {
+    display: flex;
+    gap: 20px;
 }
 
-.details-column p {
+/* Each Column */
+.info-column {
+    flex: 1;
+}
+
+.info-column p {
     margin: 5px 0;
 }
 
-/* Description styling */
+/* Description Section */
 .description-section {
     margin-top: 20px;
     padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+
 }
+
+.divider {
+    margin-right: 35px;
+    width: 1px;
+    background-color: #ccc; /* Light gray color for the divider */
+    height: 100%; /* Make the divider span the entire height */
+    align-self: stretch; /* Ensures the divider stretches fully */
+}
+.horizontal-divider {
+    height: 3px; /* Thin horizontal line */
+    background-color: #008080; /* Light gray color */
+
+    margin: 20px 0; /* Add spacing above and below */
+    width: 100%; /* Stretch across the container */
+}
+.info-tittle {
+    text-align: center; /* Center name and image */
+    font-family: 'Comic Sans MS', 'Poppins', sans-serif;
+    font-size: 1.8rem; /* Adjust font size for better readability */
+    letter-spacing: 0.02em; /* Slightly increase spacing between letters */
+    line-height: 1.2; /* Reduce line height for tighter alignment */
+    font-weight: bold;
+    color: #008080;
+}
+
+/* Centering container for buttons */
+.button-container {
+    display: flex; /* Enables flexbox */
+    justify-content: center; /* Centers buttons horizontally */
+    align-items: center; /* Centers buttons vertically */
+    gap: 20px; /* Space between the buttons */
+}
+
+/* Styling for individual buttons */
+.info-back-button,
+.download-button {
+    color: #fff; /* Text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.info-back-button:hover,
+.download-button:hover {
+    background-color: #008080; /* Darker blue on hover */
+}
+
+.border-image {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    z-index: 0; /* Ensure it stays behind */
+    pointer-events: none;
+}
+
+.paw-image {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 200px;
+    height: auto;
+    z-index: 1;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
